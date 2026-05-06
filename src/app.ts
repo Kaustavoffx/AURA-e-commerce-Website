@@ -4,7 +4,6 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import { connectRedis, disconnectRedis } from "./db/redis";
-import prisma from "./db/client";
 import authRoutes from "./routes/auth.routes";
 import productRoutes from "./routes/product.routes";
 import cartRoutes from "./routes/cart.routes";
@@ -77,55 +76,6 @@ function createApp(): express.Express {
   // ── Health check ───────────────────────────
   app.get("/health", (_req: Request, res: Response) => {
     res.status(200).json({ status: "ok" });
-  });
-
-  app.get("/seed-products", async (_req, res) => {
-    try {
-      const products = await prisma.product.createMany({
-        data: [
-          {
-            sku: "AURA-001",
-            name: "Aura Headphones",
-            price: 199.99,
-            stock: 10,
-            attributes: {},
-          },
-          {
-            sku: "AURA-002",
-            name: "Aura Smart Watch",
-            price: 299.99,
-            stock: 15,
-            attributes: {},
-          },
-          {
-            sku: "AURA-003",
-            name: "Aura Speaker",
-            price: 149.99,
-            stock: 8,
-            attributes: {},
-          },
-          {
-            sku: "AURA-004",
-            name: "Aura Keyboard",
-            price: 89.99,
-            stock: 20,
-            attributes: {},
-          },
-        ],
-        skipDuplicates: true,
-      });
-
-      res.json({
-        success: true,
-        inserted: products.count,
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        success: false,
-        error: "Seed failed",
-      });
-    }
   });
 
   // ── API routes ─────────────────────────────
