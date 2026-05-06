@@ -25,9 +25,9 @@ export default function Navigation() {
           </div>
 
           <div className="hidden md:flex gap-8 font-medium text-sm text-gray-500">
-            <Link href="/" className="hover:text-gray-900 transition-colors">Shop</Link>
-            <Link href="#" className="hover:text-gray-900 transition-colors">Collections</Link>
-            <Link href="#" className="hover:text-gray-900 transition-colors">About</Link>
+            <Link href="/shop" className="hover:text-gray-900 transition-colors">Shop</Link>
+            <Link href="/collections" className="hover:text-gray-900 transition-colors">Collections</Link>
+            <Link href="/about" className="hover:text-gray-900 transition-colors">About</Link>
           </div>
 
           <div className="flex items-center gap-4">
