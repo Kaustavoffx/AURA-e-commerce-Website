@@ -68,16 +68,14 @@ function createApp(): express.Express {
   const logFormat = process.env.NODE_ENV === "production" ? "combined" : "dev";
   app.use(morgan(logFormat));
 
+  // ── Simple root check ──────────────────────
+  app.get("/", (_req: Request, res: Response) => {
+    res.send("Backend working");
+  });
+
   // ── Health check ───────────────────────────
   app.get("/health", (_req: Request, res: Response) => {
-    res.status(200).json({
-      success: true,
-      data: {
-        status: "healthy",
-        uptime: process.uptime(),
-        timestamp: new Date().toISOString(),
-      },
-    });
+    res.status(200).json({ status: "ok" });
   });
 
   // ── API routes ─────────────────────────────
@@ -140,9 +138,9 @@ async function bootstrap(): Promise<void> {
   }
 
   const server = app.listen(PORT, () => {
-    console.log(`\n🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
     console.log(`   Environment : ${process.env.NODE_ENV ?? "development"}`);
-    console.log(`   Health check: http://localhost:${PORT}/health\n`);
+    console.log(`   Health check: /health\n`);
   });
 
   // ── Graceful shutdown ────────────────────────

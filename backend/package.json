@@ -1,6 +1,7 @@
 {
-  "name": "ecommerce-server",
+  "name": "ecommerce-backend",
   "version": "1.0.0",
+  "private": true,
   "description": "Production-ready Express.js server in TypeScript",
   "main": "dist/app.js",
   "scripts": {
@@ -12,11 +13,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
-    "prisma:studio": "prisma studio",
-    "dev:frontend": "next dev",
-    "build:frontend": "next build",
-    "start:frontend": "next start",
-    "lint:frontend": "next lint"
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
@@ -27,17 +24,11 @@
     "express": "^4.21.2",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
-    "lucide-react": "^1.14.0",
     "morgan": "^1.10.0",
-    "next": "16.2.4",
     "pg": "^8.20.0",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "redis": "^5.12.1",
-    "zustand": "^5.0.13"
+    "redis": "^5.12.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.2",
@@ -45,12 +36,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.4",
     "prisma": "^7.8.0",
-    "tailwindcss": "^4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5"
   },
