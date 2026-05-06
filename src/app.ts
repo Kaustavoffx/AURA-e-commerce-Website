@@ -50,16 +50,12 @@ function createApp(): express.Express {
   app.use(helmet());
 
   // ── CORS ────────────────────────────────────
-  const allowedOrigins = (process.env.CORS_ORIGINS ?? "")
-    .split(",")
-    .map((o) => o.trim())
-    .filter(Boolean);
-
   app.use(
     cors({
-      origin: allowedOrigins.length > 0 ? allowedOrigins : "*",
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
+      origin: [
+        "http://localhost:3000",
+        "https://original-gilt.vercel.app",
+      ],
       credentials: true,
     })
   );
