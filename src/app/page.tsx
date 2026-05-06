@@ -22,7 +22,8 @@ export default function Home() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/v1/products?limit=20`);
+        const base = process.env.NEXT_PUBLIC_API_URL;
+        const res = await fetch(`${base}/api/v1/products?limit=20`);
         const json = await res.json();
         if (json.success) {
           setProducts(json.data);

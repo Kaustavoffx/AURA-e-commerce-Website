@@ -1,7 +1,7 @@
 "use client";
 
 import { create } from 'zustand';
-import { persist } from "zustand/middleware";
+import { persist } from 'zustand/middleware';
 
 interface Product {
   id: string;
@@ -40,9 +40,9 @@ interface CartState {
   clearCartOptimistic: () => void;
 }
 
-const API_BASE = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/v1`;
+const API_BASE = `${process.env.NEXT_PUBLIC_API_URL}/api/v1`;
 
-export const useCartStore = create<CartState>()(
+export const useCartStore = create<CartState>(
   persist(
     (set, get) => ({
       token: null,
