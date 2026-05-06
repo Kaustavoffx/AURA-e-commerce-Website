@@ -34,17 +34,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-gray-50">
-        {mounted ? (
-          <>
-            <Navigation />
-            <main className="flex-1 flex flex-col pt-16">
-              <HydrationGuard>{children}</HydrationGuard>
-            </main>
-            <CartSidebar />
-          </>
-        ) : (
-          <div className="min-h-screen bg-white"></div>
-        )}
+        {mounted ? children : <div className='min-h-screen bg-white'></div>}
       </body>
     </html>
   );
