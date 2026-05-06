@@ -22,8 +22,12 @@ export default function Home() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const base = process.env.NEXT_PUBLIC_API_URL;
-        const res = await fetch(`${base}/api/v1/products?limit=20`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/products?limit=20`
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch products");
+        }
         const json = await res.json();
         if (json.success) {
           setProducts(json.data);

@@ -46,15 +46,21 @@ export default function CheckoutPage() {
     setErrors({});
 
     try {
-      const base = process.env.NEXT_PUBLIC_API_URL;
-      const res = await fetch(`${base}/api/v1/orders/checkout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ cardNumber: formData.cardNumber }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/orders/checkout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ cardNumber: formData.cardNumber }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Checkout failed");
+      }
 
       const json = await res.json();
 
