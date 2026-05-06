@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-gray-50">
         <Navigation />
         <main className="flex-1 flex flex-col pt-16">
-          <HydrationGuard>{typeof window !== 'undefined' ? children : null}</HydrationGuard>
+          <HydrationGuard>{typeof window === 'undefined' ? null : children}</HydrationGuard>
         </main>
         <CartSidebar />
       </body>

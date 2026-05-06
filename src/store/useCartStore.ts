@@ -42,7 +42,7 @@ interface CartState {
 
 const API_BASE = `${process.env.NEXT_PUBLIC_API_URL}/api/v1`;
 
-export const useCartStore = create<CartState>(
+export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       token: null,
