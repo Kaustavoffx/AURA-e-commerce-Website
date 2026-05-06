@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaClient, Prisma } from "../src/generated/prisma/client";
 import { hash } from "bcrypt";
 
 // ============================================================
@@ -327,7 +327,7 @@ async function seedProducts(prisma: PrismaClient) {
         name:       p.name,
         price:      p.price,
         stock:      p.stock,
-        attributes: p.attributes,
+        attributes: p.attributes as Prisma.InputJsonValue,
       },
     });
 
