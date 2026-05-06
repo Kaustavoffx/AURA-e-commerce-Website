@@ -56,7 +56,7 @@ export async function checkout(
     }
 
     let calculatedTotal = 0;
-    const orderItemsData = [];
+    const orderItemsData: any[] = [];
 
     for (const prod of products) {
       const quantity = parseInt(rawCart[prod.id], 10);
@@ -171,7 +171,7 @@ export async function updateOrderStatus(
   next: NextFunction
 ): Promise<void> {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const { status } = req.body;
 
     const validStatuses = Object.values(OrderStatus);

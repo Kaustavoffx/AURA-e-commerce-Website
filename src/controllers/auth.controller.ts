@@ -24,7 +24,7 @@ export interface JwtPayload {
 function signToken(userId: string, role: string): string {
   return jwt.sign(
     { sub: userId, role } satisfies JwtPayload,
-    JWT_SECRET,
+    JWT_SECRET as string,
     { expiresIn: JWT_EXPIRES }
   );
 }

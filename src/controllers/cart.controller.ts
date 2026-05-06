@@ -96,7 +96,7 @@ export async function updateCartQuantity(
     const key = getCartKey(req.user.sub);
 
     // HSET overwrites the exact value
-    await redis.hSet(key, productId, quantity.toString());
+    await redis.hSet(key, productId as string, quantity.toString());
 
     res.status(200).json({
       success: true,
@@ -127,7 +127,7 @@ export async function removeFromCart(
     const key = getCartKey(req.user.sub);
 
     // HDEL completely removes the field from the hash
-    const deletedCount = await redis.hDel(key, productId);
+    const deletedCount = await redis.hDel(key, productId as string);
 
     if (deletedCount === 0) {
       throw new AppError("Item not found in cart.", 404);
