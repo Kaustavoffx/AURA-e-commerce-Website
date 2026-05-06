@@ -44,7 +44,7 @@ export default function CheckoutPage() {
     setErrors({});
 
     try {
-      const res = await fetch("http://localhost:3000/api/v1/orders/checkout", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/v1/orders/checkout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
