@@ -20,7 +20,4 @@ export default defineConfig({
   datasource: {
     url: process.env.DATABASE_URL!,
   },
-
-  // Seed command — run with: npx prisma db seed
-  seed: "npx ts-node-dev --transpile-only prisma/seed.ts",
 });
