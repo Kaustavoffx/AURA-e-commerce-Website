@@ -24,15 +24,10 @@ interface CartState {
   totalPrice: string;
   isSidebarOpen: boolean;
   
-  // Auth
   setToken: (token: string | null) => void;
-  
-  // UI Actions
   toggleSidebar: () => void;
   openSidebar: () => void;
   closeSidebar: () => void;
-
-  // Cart API Actions
   fetchCart: () => Promise<void>;
   addToCart: (productId: string, quantity?: number) => Promise<void>;
   updateQuantity: (productId: string, quantity: number) => Promise<void>;
@@ -87,7 +82,7 @@ export const useCartStore = create<CartState>()(
           return;
         }
 
-        set({ isSidebarOpen: true }); // UX: Open sidebar
+        set({ isSidebarOpen: true });
 
         try {
           const res = await fetch(`${API_BASE}/cart`, {
@@ -100,7 +95,7 @@ export const useCartStore = create<CartState>()(
           });
 
           if (res.ok) {
-            await get().fetchCart(); // Hydrate complete cart details
+            await get().fetchCart();
           }
         } catch (error) {
           console.error("Failed to add to cart", error);
@@ -111,7 +106,6 @@ export const useCartStore = create<CartState>()(
         const { token } = get();
         if (!token) return;
 
-        // Optimistic UI Update
         set((state) => ({
           items: state.items.map((item) =>
             item.product.id === productId ? { ...item, quantity } : item
@@ -137,7 +131,6 @@ export const useCartStore = create<CartState>()(
         const { token } = get();
         if (!token) return;
 
-        // Optimistic UI update
         set((state) => ({
           items: state.items.filter((item) => item.product.id !== productId),
         }));
@@ -158,8 +151,8 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: "ecommerce-cart-storage", // local storage key
-      partialize: (state) => ({ token: state.token }), // Persist only the token
+      name: "ecommerce-cart-storage",
+      partialize: (state) => ({ token: state.token }),
     }
   )
 );

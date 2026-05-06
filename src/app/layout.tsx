@@ -31,11 +31,15 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-gray-50">
-        <Navigation />
-        <main className="flex-1 flex flex-col pt-16">
-          <HydrationGuard>{typeof window === 'undefined' ? null : children}</HydrationGuard>
-        </main>
-        <CartSidebar />
+        {typeof window === 'undefined' ? null : (
+          <>
+            <Navigation />
+            <main className="flex-1 flex flex-col pt-16">
+              <HydrationGuard>{children}</HydrationGuard>
+            </main>
+            <CartSidebar />
+          </>
+        )}
       </body>
     </html>
   );
