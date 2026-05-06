@@ -3,18 +3,13 @@
 import { useCartStore } from "../store/useCartStore";
 import { X, Plus, Minus, Trash2, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useHydration } from "../hooks/useHydration";
 
 export default function CartSidebar() {
   const { isSidebarOpen, closeSidebar, items, totalPrice, updateQuantity, removeFromCart } = useCartStore();
-  const [mounted, setMounted] = useState(false);
+  const isHydrated = useHydration();
 
-  // Prevent hydration mismatch for Zustand persisted state
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted || !isSidebarOpen) return null;
+  if (!isHydrated || !isSidebarOpen) return null;
 
   return (
     <>

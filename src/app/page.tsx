@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useCartStore } from "../store/useCartStore";
 import { Plus } from "lucide-react";
+import { useHydration } from "../hooks/useHydration";
 
 interface Product {
   id: string;
@@ -16,6 +17,7 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCartStore();
+  const isHydrated = useHydration();
 
   useEffect(() => {
     async function loadProducts() {
@@ -45,7 +47,7 @@ export default function Home() {
         </p>
       </div>
 
-      {loading ? (
+      {(!isHydrated || loading) ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="animate-pulse flex flex-col gap-5">

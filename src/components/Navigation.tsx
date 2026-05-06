@@ -3,17 +3,13 @@
 import Link from "next/link";
 import { ShoppingBag, Menu, User } from "lucide-react";
 import { useCartStore } from "../store/useCartStore";
-import { useEffect, useState } from "react";
+import { useHydration } from "../hooks/useHydration";
 
 export default function Navigation() {
   const { openSidebar, items } = useCartStore();
-  const [mounted, setMounted] = useState(false);
+  const isHydrated = useHydration();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const totalItems = mounted ? items.reduce((acc, item) => acc + item.quantity, 0) : 0;
+  const totalItems = isHydrated ? items.reduce((acc, item) => acc + item.quantity, 0) : 0;
 
   return (
     <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-xl border-b border-gray-100 z-30 shadow-sm shadow-black/5">
