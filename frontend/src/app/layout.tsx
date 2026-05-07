@@ -1,17 +1,12 @@
 import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import CartSidebar from "../components/CartSidebar";
 import Navigation from "../components/Navigation";
 import HydrationGuard from "../components/HydrationGuard";
 import ToastViewport from "../components/ToastViewport";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
@@ -23,12 +18,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-gray-50">
+      <body className="min-h-full flex flex-col bg-[#f6f4ef] text-slate-950">
         <Navigation />
         <ToastViewport />
-        <main className="flex-1 flex flex-col pt-16">
+        <main className="flex-1 flex flex-col">
           <HydrationGuard>{children}</HydrationGuard>
         </main>
         <CartSidebar />

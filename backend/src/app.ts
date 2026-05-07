@@ -86,6 +86,14 @@ function createApp(): express.Express {
   app.use("/api/v1/products", productRoutes);
   app.use("/api/v1/cart", cartRoutes);
   app.use("/api/v1/orders", orderRoutes);
+  // Admin API
+  // Note: admin routes are protected by JWT + role middleware
+  // and expose summary endpoints used by the frontend admin dashboard.
+  // Keep these endpoints minimal and performant.
+  // Import lazily to avoid circular deps during tests.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const adminRoutes = require("./routes/admin.routes").default;
+  app.use("/api/v1/admin", adminRoutes);
 
   // ── 404 handler ────────────────────────────
   app.use((_req: Request, _res: Response, next: NextFunction) => {

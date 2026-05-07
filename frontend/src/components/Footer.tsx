@@ -1,15 +1,20 @@
 export default function Footer() {
   return (
-    <footer className="site-footer mt-24 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div>
-          <h4 className="text-white font-bold mb-3">AURA</h4>
-          <p className="text-sm text-gray-300">Premium goods crafted with care. Fast shipping. Hassle-free returns.</p>
+    <footer className="mt-24 border-t border-slate-200/80 bg-white/80 backdrop-blur-xl">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8 lg:py-16">
+        <div className="space-y-4">
+          <div className="text-3xl font-semibold tracking-tight text-slate-950">AURA</div>
+          <p className="max-w-md text-sm leading-6 text-slate-500">
+            Premium commerce with a clean catalog, secure checkout, and role-aware admin tooling.
+          </p>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+            © {new Date().getFullYear()} Aura, Inc.
+          </p>
         </div>
 
         <div>
-          <h5 className="text-white font-semibold mb-2">Shop</h5>
-          <ul className="text-sm text-gray-300 space-y-2">
+          <h5 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-900">Shop</h5>
+          <ul className="mt-4 space-y-3 text-sm text-slate-500">
             <li>All Products</li>
             <li>Collections</li>
             <li>Gift Cards</li>
@@ -17,8 +22,8 @@ export default function Footer() {
         </div>
 
         <div>
-          <h5 className="text-white font-semibold mb-2">Customer</h5>
-          <ul className="text-sm text-gray-300 space-y-2">
+          <h5 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-900">Customer</h5>
+          <ul className="mt-4 space-y-3 text-sm text-slate-500">
             <li>Help Center</li>
             <li>Track Order</li>
             <li>Returns</li>
@@ -26,9 +31,9 @@ export default function Footer() {
         </div>
 
         <div>
-          <h5 className="text-white font-semibold mb-2">Contact</h5>
-          <p className="text-sm text-gray-300">support@aura.example</p>
-          <p className="text-sm text-gray-300 mt-4">© {new Date().getFullYear()} Aura, Inc.</p>
+          <h5 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-900">Contact</h5>
+          <p className="mt-4 text-sm text-slate-500">support@aura.example</p>
+          <p className="mt-3 text-sm text-slate-500">Mon-Fri, 9am-6pm</p>
         </div>
       </div>
     </footer>
