@@ -46,16 +46,19 @@ interface ErrorResponseBody {
 function createApp(): express.Express {
   const app = express();
 
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://original-gilt.vercel.app",
+    process.env.FRONTEND_URL,
+  ].filter((origin): origin is string => Boolean(origin));
+
   // ── Security headers ────────────────────────
   app.use(helmet());
 
   // ── CORS ────────────────────────────────────
   app.use(
     cors({
-      origin: [
-        "http://localhost:3000",
-        "https://original-gilt.vercel.app",
-      ],
+      origin: allowedOrigins,
       credentials: true,
     })
   );

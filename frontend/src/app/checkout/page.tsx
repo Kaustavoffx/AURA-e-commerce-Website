@@ -5,10 +5,14 @@ import { useCartStore } from "../../store/useCartStore";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useHydration } from "../../hooks/useHydration";
+import { useRequireAuth } from "../../hooks/useRequireAuth";
+import { useToastStore } from "../../store/useToastStore";
 
 export default function CheckoutPage() {
   const { items, totalPrice, token, clearCartOptimistic } = useCartStore();
   const isHydrated = useHydration();
+  const { ready } = useRequireAuth();
+  const { pushToast } = useToastStore();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -70,17 +74,19 @@ export default function CheckoutPage() {
           orderId: json.data.order.id,
         });
         clearCartOptimistic(); // Clear cart purely on the frontend
+        pushToast("Order placed successfully", "success");
       } else {
         setErrors({ general: json.error?.message || "Checkout failed." });
       }
     } catch (err) {
       setErrors({ general: "A network error occurred." });
+      pushToast("Checkout failed", "error");
     } finally {
       setLoading(false);
     }
   };
 
-  if (!isHydrated) {
+  if (!isHydrated || !ready) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex items-center justify-center min-h-[60vh]">
         <Loader2 className="w-10 h-10 animate-spin text-gray-300" />

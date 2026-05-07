@@ -13,17 +13,24 @@ export default function CartSidebar() {
 
   return (
     <>
-      <div 
+      <button
+        type="button"
         className="fixed inset-0 bg-black/50 z-40 transition-opacity backdrop-blur-sm"
         onClick={closeSidebar}
+        aria-label="Close cart"
       />
       
-      <div className="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl z-50 flex flex-col transform transition-transform duration-300">
+      <div
+        className="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl z-50 flex flex-col transform transition-transform duration-300"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Shopping cart"
+      >
         <div className="flex items-center justify-between p-5 border-b border-gray-100">
           <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
             <ShoppingBag className="w-5 h-5" /> Shopping Cart
           </h2>
-          <button onClick={closeSidebar} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500">
+          <button onClick={closeSidebar} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500" aria-label="Close shopping cart">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -47,6 +54,7 @@ export default function CartSidebar() {
                         onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                         disabled={item.quantity <= 1}
                         className="p-1.5 hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                        aria-label={`Decrease quantity of ${item.product.name}`}
                       >
                         <Minus className="w-3.5 h-3.5 text-gray-700" />
                       </button>
@@ -54,6 +62,7 @@ export default function CartSidebar() {
                       <button 
                         onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                         className="p-1.5 hover:bg-gray-50 transition-colors"
+                        aria-label={`Increase quantity of ${item.product.name}`}
                       >
                         <Plus className="w-3.5 h-3.5 text-gray-700" />
                       </button>
@@ -63,6 +72,7 @@ export default function CartSidebar() {
                       onClick={() => removeFromCart(item.product.id)}
                       className="p-1.5 text-red-500/70 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Remove item"
+                      aria-label={`Remove ${item.product.name} from cart`}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

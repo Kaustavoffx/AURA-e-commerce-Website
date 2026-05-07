@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import CartSidebar from "../components/CartSidebar";
 import Navigation from "../components/Navigation";
 import HydrationGuard from "../components/HydrationGuard";
+import ToastViewport from "../components/ToastViewport";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-gray-50">
         <Navigation />
+        <ToastViewport />
         <main className="flex-1 flex flex-col pt-16">
           <HydrationGuard>{children}</HydrationGuard>
         </main>
