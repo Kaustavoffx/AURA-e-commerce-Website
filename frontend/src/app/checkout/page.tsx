@@ -7,8 +7,10 @@ import Link from "next/link";
 import { useHydration } from "../../hooks/useHydration";
 import { useRequireAuth } from "../../hooks/useRequireAuth";
 import { useToastStore } from "../../store/useToastStore";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const { items, totalPrice, token, clearCartOptimistic } = useCartStore();
   const isHydrated = useHydration();
   const { ready } = useRequireAuth();
@@ -45,6 +47,12 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
+    if (!token) {
+      setErrors({ general: "Please login to continue checkout." });
+      pushToast("Please login to checkout", "info");
+      router.replace("/login");
+      return;
+    }
     
     setLoading(true);
     setErrors({});
@@ -56,31 +64,30 @@ export default function CheckoutPage() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ cardNumber: formData.cardNumber }),
         }
       );
 
-      if (!res.ok) {
-        throw new Error("Checkout failed");
-      }
-
-      const json = await res.json();
-
-      if (res.ok) {
+      const json = await res.json().catch(() => null);
+      if (res.ok && json?.data?.order?.id && json?.data?.transactionId) {
         setSuccessData({
           transactionId: json.data.transactionId,
           orderId: json.data.order.id,
         });
         clearCartOptimistic(); // Clear cart purely on the frontend
         pushToast("Order placed successfully", "success");
+        router.push(`/account/orders/${json.data.order.id}`);
       } else {
-        setErrors({ general: json.error?.message || "Checkout failed." });
+        const apiMessage = json?.error?.message || json?.message || "Checkout failed.";
+        setErrors({ general: apiMessage });
+        pushToast(apiMessage, "error");
       }
-    } catch (err) {
-      setErrors({ general: "A network error occurred." });
-      pushToast("Checkout failed", "error");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unable to reach checkout service.";
+      setErrors({ general: message });
+      pushToast(message, "error");
     } finally {
       setLoading(false);
     }

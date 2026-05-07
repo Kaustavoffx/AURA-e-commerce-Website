@@ -3,6 +3,8 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCartStore } from "../../../store/useCartStore";
+import ProductGallery from "../../../components/ProductGallery";
+import RatingStars from "../../../components/RatingStars";
 
 interface Product {
   id: string;
@@ -11,6 +13,8 @@ interface Product {
   price: string;
   stock: number;
   attributes?: Record<string, unknown>;
+  imageUrl?: string;
+  description?: string;
 }
 
 export default function ProductDetailPage() {
@@ -52,31 +56,47 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="bg-white border border-gray-100 rounded-3xl p-8 md:p-12">
-        <p className="text-sm text-gray-500 mb-2">SKU: {product.sku}</p>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
-        <p className="text-2xl font-semibold text-gray-900 mb-2">${product.price}</p>
-        <p className="text-gray-500 mb-8">
-          {product.stock > 0 ? `${product.stock} in stock` : "Currently out of stock"}
-        </p>
-
-        <button
-          onClick={() => addToCart(product.id)}
-          disabled={product.stock === 0}
-          className="px-6 py-3 bg-black text-white rounded-xl font-semibold hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-        </button>
-
-        {product.attributes && Object.keys(product.attributes).length > 0 && (
-          <div className="mt-10">
-            <h2 className="text-xl font-semibold text-gray-900 mb-3">Attributes</h2>
-            <pre className="bg-gray-50 border border-gray-100 rounded-xl p-4 text-sm text-gray-700 overflow-x-auto">
-              {JSON.stringify(product.attributes, null, 2)}
-            </pre>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="md:col-span-2">
+          <ProductGallery images={product.imageUrl ? [product.imageUrl] : []} />
+          <div className="mt-6 bg-white p-6 rounded-2xl card">
+            <p className="text-sm text-gray-500 mb-2">SKU: {product.sku}</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+            <div className="flex items-center gap-4"><RatingStars /></div>
+            <p className="mt-4 text-gray-700">{product.description ?? 'High quality product.'}</p>
           </div>
-        )}
+
+          <div className="mt-6 bg-white p-6 rounded-2xl card">
+            <h2 className="text-xl font-semibold mb-3">Specifications</h2>
+            <pre className="text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">{JSON.stringify(product.attributes ?? {}, null, 2)}</pre>
+          </div>
+
+          <div className="mt-6">
+            <h3 className="text-xl font-semibold mb-3">Reviews</h3>
+            <div className="space-y-4">
+              <div className="bg-white p-4 rounded-lg border border-gray-100">No reviews yet. Be the first to review this product.</div>
+            </div>
+          </div>
+        </div>
+
+        <aside className="sticky top-24">
+          <div className="bg-white p-6 rounded-2xl card">
+            <div className="flex items-baseline justify-between">
+              <div className="text-2xl font-bold">${product.price}</div>
+              <div className="text-sm text-gray-500">{product.stock > 0 ? 'In stock' : 'Out of stock'}</div>
+            </div>
+
+            <div className="mt-4">
+              <label className="text-sm text-gray-600">Quantity</label>
+              <div className="mt-2 flex items-center gap-3">
+                <button onClick={() => addToCart(product.id)} disabled={product.stock===0} className="flex-1 px-4 py-3 bg-black text-white rounded-lg">{product.stock===0? 'Out of Stock' : 'Add to Cart'}</button>
+              </div>
+            </div>
+
+            <div className="mt-4 text-sm text-gray-500">Secure checkout • 30-day returns</div>
+          </div>
+        </aside>
       </div>
     </div>
   );

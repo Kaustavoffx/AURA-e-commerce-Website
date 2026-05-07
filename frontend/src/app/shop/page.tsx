@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import ProductCard from "../../components/ProductCard";
 
 interface Product {
   id: string;
@@ -144,17 +145,7 @@ export default function ShopPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {paged.map((product) => (
-          <Link
-            key={product.id}
-            href={`/products/${product.id}`}
-            className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-lg transition-shadow"
-          >
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h2>
-            <p className="text-gray-500 mb-2">${product.price}</p>
-            <p className="text-sm text-gray-500">
-              {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
-            </p>
-          </Link>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       )}

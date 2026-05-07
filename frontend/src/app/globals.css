@@ -22,13 +22,42 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-family: var(--font-geist-sans), "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
 }
 
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
+
+/* Design tokens */
+:root {
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --glass-bg: rgba(255,255,255,0.6);
+}
+
+/* Smooth transitions and reduced motion support */
+* { transition: background-color 180ms ease, color 180ms ease, transform 200ms ease; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* Utility helpers for premium feel */
+.btn-primary { background: linear-gradient(90deg,#0f172a,#111827); color: white; }
+.glass { background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35)); backdrop-filter: blur(6px); }
+
+.card { border-radius: var(--radius-md); box-shadow: 0 8px 30px rgba(15,23,42,0.08); }
+
+.image-zoom { transform-origin: center; }
+.image-zoom:hover { transform: scale(1.05); }
+
+/* Better focus outlines */
+:focus { outline: 2px solid rgba(99,102,241,0.18); outline-offset: 2px; }
+
+/* Footer */
+.site-footer { background: linear-gradient(180deg,#0b1220,#071023); color: #cbd5e1; }
 
 @media (prefers-color-scheme: dark) {
   .custom-scrollbar {

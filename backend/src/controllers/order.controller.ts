@@ -114,9 +114,13 @@ export async function checkout(
       return newOrder;
     });
 
-    // 5. Cart Purge (Internal Utility Call)
-    // Invoked only after the transaction commits successfully
-    await clearCart(userId);
+    // 5. Cart Purge (best effort)
+    // Do not fail a successful order if Redis cart purge fails.
+    try {
+      await clearCart(userId);
+    } catch (clearErr) {
+      console.warn(`Cart clear failed after successful checkout for user ${userId}:`, clearErr);
+    }
 
     res.status(201).json({
       success: true,
